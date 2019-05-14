@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Dropdown.js - a lightweight dropdown of jQuery plugins </title>
+  <link rel="stylesheet" type="text/css" href="bootstrap.css">
+  <script type="text/javascript" src="mock.js"></script>
+  <script src="jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./jquery.dropdown.css">
+  <script src="./jquery.dropdown.js"></script>
+  <style>
+    body {
+      width: 80%;
+      margin: 0 auto;
+      padding-bottom: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <form action="">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="dropdown-mul-1" style="width: 400px;">
+          <select style="display:none;width: 400px" name="" id="fields" multiple placeholder="请选择"> </select>
+          <style>
+            .dropdown-search{
+              width: 1px;!important;
+              height: 1px;!important;
+            }
+          </style>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script>
+    var Random = Mock.Random;
+    var json1 = Mock.mock({
+      "data|10-50": [{
+        name: function() {
+          return Random.name(true)
+        },
+        "id": function() {
+          return Random.cword(3);
+        },
+        //"disabled|1-2": true,
+       // groupName: '分组名',
+        //"groupId|1-4": 1,
+        "selected": false
+      }]
+    });
+    var data = '[{"selected":false,"name":"风险预警","id":"1"},{"selected":false,"name":"过程控制","id":"2"},{"selected":false,"name":"风控绩效","id":"3"},{"selected":false,"name":"结果合规","id":"4"}]';
+    var dataJson = JSON.parse(data);
+	var select = ["2","1"];
+	$.each(select,function(index,value){
+		$.each(dataJson,function(jindex,obj){
+			if(value == obj.id){
+				obj.selected = true;
+			}
+		})
+	})
+	var dropdown = $('.dropdown-mul-1').dropdown({
+      data:  dataJson,
+      limitCount: 2000,
+      multipleMode: 'label',
+      choice: function(xxxx, event) {
+        console.log(xxxx, this);
+      },
+	  del : function(){
+		alert(1);
+	  }
+    });
+
+
+	$("#del").click(function(){
+		dropdown.destroy();
+		var data = '[{"selected":false,"name":"风险预警","id":"1"},{"selected":false,"name":"过程控制","id":"2"},{"selected":false,"name":"风控绩效","id":"3"},{"selected":false,"name":"结果合规","id":"4"}]';
+        var dataJson = JSON.parse(data);
+		$.each(select,function(index,value){
+			$.each(dataJson,function(jindex,obj){
+				if(value == obj.id){
+					obj.selected = true;
+				}
+			})
+		})
+		dropdown = $('.dropdown-mul-1').dropdown({
+		  data:  dataJson,
+		  limitCount: 2000,
+		  multipleMode: 'label',
+		  choice: function(xxxx, event) {
+			console.log(xxxx, this);
+      }
+    });
+	});
+
+
+
+
+  </script>
+</body>
+
+</html>
